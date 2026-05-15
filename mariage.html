@@ -68,14 +68,26 @@ section{padding:var(--section-gap) 48px}
 .section-header{margin-bottom:64px}
 .section-header .overline{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
 .section-header h2{font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--white)}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+
+/* Scroll strip gallery */
+.gallery-strip-wrap{overflow:hidden;margin-bottom:4px}
+.gallery-strip{display:flex;gap:4px;animation:stripScroll 40s linear infinite}
+.gallery-strip:hover{animation-play-state:paused}
+.gallery-strip-inner{display:flex;gap:4px;flex-shrink:0}
+.strip-img{height:280px;width:auto;object-fit:cover;display:block;flex-shrink:0;transition:transform .6s ease}
+.gallery-strip:hover .strip-img{transform:scale(1.03)}
+@keyframes stripScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* Static grid */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
 .gallery-item{overflow:hidden;position:relative;cursor:none}
 .gallery-item img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .8s ease}
 .gallery-item:hover img{transform:scale(1.05)}
+.gallery-item.tall img{aspect-ratio:2/3}
 .gallery-item.wide{grid-column:span 2}
 .gallery-item.wide img{aspect-ratio:16/9}
 .gallery-overlay{position:absolute;inset:0;background:rgba(13,11,9,0);transition:background .4s;display:flex;align-items:center;justify-content:center}
-.gallery-item:hover .gallery-overlay{background:rgba(13,11,9,.3)}
+.gallery-item:hover .gallery-overlay{background:rgba(13,11,9,.35)}
 .gallery-overlay span{color:var(--white);font-style:italic;font-size:.9rem;letter-spacing:.1em;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
 .gallery-item:hover .gallery-overlay span{opacity:1;transform:translateY(0)}
 
@@ -157,6 +169,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   .services-grid,.process-steps,.stats-grid,.testimonials-grid{grid-template-columns:1fr}
   .process-step::after{display:none}
   .hero-bottom{padding:0 24px}
+  .strip-img{height:200px}
 }
 </style>
 </head>
@@ -223,6 +236,44 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
     <p class="overline">Portfolio</p>
     <h2>Instants d'éternité</h2>
   </div>
+
+  <!-- Bande défilante automatique -->
+  <div class="gallery-strip-wrap">
+    <div class="gallery-strip">
+      <!-- première moitié -->
+      <div class="gallery-strip-inner">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=600&q=80" alt="">
+      </div>
+      <!-- deuxième moitié (copie pour boucle infinie) -->
+      <div class="gallery-strip-inner" aria-hidden="true">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=600&q=80" alt="">
+        <img class="strip-img" src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=600&q=80" alt="">
+      </div>
+    </div>
+  </div>
+
+  <!-- Grille statique -->
   <div class="gallery-grid">
     <div class="gallery-item wide">
       <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=80" alt="Cérémonie">
@@ -240,21 +291,37 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
       <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=80" alt="Couple">
       <div class="gallery-overlay"><span>Le couple</span></div>
     </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=800&q=80" alt="Préparatifs">
+      <div class="gallery-overlay"><span>Préparatifs</span></div>
+    </div>
     <div class="gallery-item wide">
       <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=80" alt="Réception">
       <div class="gallery-overlay"><span>La réception</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=800&q=80" alt="Église">
+      <div class="gallery-overlay"><span>Cérémonie religieuse</span></div>
     </div>
     <div class="gallery-item">
       <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=800&q=80" alt="Émotion">
       <div class="gallery-overlay"><span>L'émotion</span></div>
     </div>
     <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=800&q=80" alt="Alliances">
+      <div class="gallery-overlay"><span>Les alliances</span></div>
+    </div>
+    <div class="gallery-item">
       <img src="https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=800&q=80" alt="Fleurs">
       <div class="gallery-overlay"><span>Florales</span></div>
     </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=800&q=80" alt="Lumière dorée">
+    <div class="gallery-item wide">
+      <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200&q=80" alt="Lumière dorée">
       <div class="gallery-overlay"><span>Lumière dorée</span></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Robe de mariée">
+      <div class="gallery-overlay"><span>La robe</span></div>
     </div>
   </div>
 </section>
@@ -436,7 +503,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js"></script>
 <script>
-// ─── CURSOR ──────────────────────────────────────────────────────────────────
+// ─── CURSOR ───────────────────────────────────────────────────────────────────
 (function(){
   const dot=document.getElementById('cursor-dot');
   const ring=document.getElementById('cursor-ring');
@@ -449,7 +516,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   });
 })();
 
-// ─── HERO: THREE.JS INFINITE GALLERY ─────────────────────────────────────────
+// ─── HERO: THREE.JS INFINITE TUNNEL ──────────────────────────────────────────
 (function(){
   if(typeof THREE==='undefined')return;
 
@@ -461,12 +528,15 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
     'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=80',
     'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80',
     'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=1200&q=80',
-    'https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=1200&q=80'
+    'https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=1200&q=80',
+    'https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=1200&q=80',
+    'https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=1200&q=80',
+    'https://images.unsplash.com/photo-1525772764200-be829a350797?w=1200&q=80',
+    'https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200&q=80'
   ];
 
-  const N=8, DEPTH=50, TUNNEL=25;
+  const N=12, DEPTH=60;
   const wrap=document.getElementById('hero-canvas-wrap');
-
   function W(){return wrap.clientWidth||window.innerWidth}
   function H(){return wrap.clientHeight||window.innerHeight}
 
@@ -526,17 +596,14 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
         }
         color=blurred/total;
       }
-      color.rgb+=vec3(abs(scrollForce)*0.005);
+      color.rgb+=vec3(abs(scrollForce)*0.004);
       gl_FragColor=vec4(color.rgb,color.a*opacity);
     }
   `;
 
   const geo=new THREE.PlaneGeometry(8,5.5,24,16);
   const loader=new THREE.TextureLoader();
-  loader.crossOrigin='anonymous';
-
-  const meshes=[];
-  const baseZ=[];
+  const meshes=[], baseZ=[];
 
   for(let i=0;i<N;i++){
     const mat=new THREE.ShaderMaterial({
@@ -554,14 +621,11 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
       transparent:true,
       side:THREE.FrontSide
     });
-
-    (function(idx,material){
+    (function(idx,m){
       loader.load(IMGS[idx],tex=>{
         tex.minFilter=THREE.LinearFilter;
-        material.uniforms.map.value=tex;
-        if(tex.image){
-          material.uniforms.texelSize.value.set(1/tex.image.width,1/tex.image.height);
-        }
+        m.uniforms.map.value=tex;
+        if(tex.image) m.uniforms.texelSize.value.set(1/tex.image.width,1/tex.image.height);
       });
     })(i,mat);
 
@@ -584,13 +648,13 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   });
   renderer.domElement.addEventListener('mouseleave',()=>mouse.set(-999,-999));
 
-  let vel=0,scrollPos=0,autoPlay=true,lastInput=Date.now();
-  setInterval(()=>{if(Date.now()-lastInput>3000)autoPlay=true;},1000);
+  // Vitesse constante — toujours en défilement, la molette accélère seulement
+  const BASE_VEL=0.55;
+  let vel=BASE_VEL, scrollPos=0, lastWheel=0;
 
   renderer.domElement.addEventListener('wheel',e=>{
-    vel+=e.deltaY*0.012;
-    autoPlay=false;
-    lastInput=Date.now();
+    vel+=e.deltaY*0.015;
+    lastWheel=Date.now();
   },{passive:true});
 
   const clock=new THREE.Clock();
@@ -600,28 +664,32 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
     const dt=clock.getDelta();
     const t=clock.getElapsedTime();
 
-    if(autoPlay) vel+=0.28*dt;
-    vel*=0.94;
-    scrollPos+=vel;
+    // Revenir progressivement à la vitesse de base après 2s sans molette
+    if(Date.now()-lastWheel>2000){
+      vel+=(BASE_VEL-vel)*0.03;
+    }
+    vel=Math.max(0.1, vel*0.985 + BASE_VEL*0.015);
+    scrollPos+=vel*dt;
 
     raycaster.setFromCamera(mouse,cam);
     const hits=raycaster.intersectObjects(meshes);
-    const hoveredMesh=hits.length>0?hits[0].object:null;
-    document.body.classList.toggle('cursor-over',!!hoveredMesh);
+    const hovered=hits.length>0?hits[0].object:null;
+    document.body.classList.toggle('cursor-over',!!hovered);
 
     meshes.forEach((mesh,i)=>{
       const raw=baseZ[i]+scrollPos;
-      const np=((-raw%DEPTH)+DEPTH)%DEPTH/DEPTH;
-      mesh.position.z=raw-(Math.floor(raw/(-DEPTH)))*DEPTH;
+      const cycle=((-raw%DEPTH)+DEPTH)%DEPTH;
+      const np=cycle/DEPTH;
+      mesh.position.z=raw+Math.ceil(-raw/DEPTH)*DEPTH;
 
-      let op=1,blur=0;
-      if(np<0.05) op=np/0.05;
-      else if(np>0.40&&np<0.43) op=1-(np-0.40)/0.03;
-      else if(np>=0.43) op=0;
+      let op=1, blur=0;
+      if(np<0.06) op=np/0.06;
+      else if(np>0.40&&np<0.44) op=1-(np-0.40)/0.04;
+      else if(np>=0.44) op=0;
 
-      if(np<0.10) blur=(1-np/0.10)*6;
-      else if(np>0.40&&np<0.43) blur=((np-0.40)/0.03)*6;
-      else if(np>=0.43) blur=6;
+      if(np<0.12) blur=(1-np/0.12)*5;
+      else if(np>0.40&&np<0.44) blur=((np-0.40)/0.04)*5;
+      else if(np>=0.44) blur=5;
       else blur=0;
 
       const u=mesh.material.uniforms;
@@ -629,7 +697,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
       u.blurAmount.value=blur;
       u.scrollForce.value=vel;
       u.time.value=t;
-      u.isHovered.value=mesh===hoveredMesh?1:0;
+      u.isHovered.value=mesh===hovered?1:0;
     });
 
     renderer.render(scene,cam);
@@ -642,51 +710,36 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   }).observe(wrap);
 })();
 
-// ─── BOOT (GSAP, LENIS, SCROLL ANIMATIONS) ───────────────────────────────────
+// ─── BOOT ─────────────────────────────────────────────────────────────────────
 function boot(){
   gsap.registerPlugin(ScrollTrigger);
 
-  // Lenis smooth scroll
   const lenis=new Lenis({lerp:.08,smoothWheel:true});
   lenis.on('scroll',ScrollTrigger.update);
   gsap.ticker.add(t=>lenis.raf(t*1000));
   gsap.ticker.lagSmoothing(0);
 
-  // Nav scrolled state
   ScrollTrigger.create({
-    trigger:'#about',
-    start:'top 85%',
+    trigger:'#about',start:'top 85%',
     onEnter:()=>document.getElementById('nav').classList.add('scrolled'),
     onLeaveBack:()=>document.getElementById('nav').classList.remove('scrolled')
   });
 
-  // About section
   gsap.from('.about-img-wrap',{scrollTrigger:{trigger:'#about',start:'top 75%'},x:-60,opacity:0,duration:1.2,ease:'power3.out'});
   gsap.from('.about-text > *',{scrollTrigger:{trigger:'#about',start:'top 70%'},y:40,opacity:0,duration:1,stagger:.12,ease:'power3.out'});
-
-  // Gallery items
-  gsap.from('.gallery-item',{scrollTrigger:{trigger:'#gallery',start:'top 80%'},y:50,opacity:0,duration:.9,stagger:.08,ease:'power3.out'});
-
-  // Service cards
+  gsap.from('.gallery-item',{scrollTrigger:{trigger:'#gallery',start:'top 80%'},y:50,opacity:0,duration:.9,stagger:.06,ease:'power3.out'});
   gsap.from('.service-card',{scrollTrigger:{trigger:'#services',start:'top 75%'},y:40,opacity:0,duration:.9,stagger:.15,ease:'power3.out'});
-
-  // Process steps
   gsap.from('.process-step',{scrollTrigger:{trigger:'#process',start:'top 75%'},y:30,opacity:0,duration:.8,stagger:.15,ease:'power3.out'});
 
-  // Stats counter
   document.querySelectorAll('.stat-number').forEach(el=>{
     const target=+el.dataset.target;
     ScrollTrigger.create({
-      trigger:'#stats',
-      start:'top 80%',
+      trigger:'#stats',start:'top 80%',
       onEnter:()=>gsap.to({v:0},{v:target,duration:2,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(this.targets()[0].v)}})
     });
   });
 
-  // Testimonials
   gsap.from('.testimonial-card',{scrollTrigger:{trigger:'#testimonials',start:'top 75%'},y:40,opacity:0,duration:.9,stagger:.15,ease:'power3.out'});
-
-  // Contact
   gsap.from('.contact-info > *',{scrollTrigger:{trigger:'#contact',start:'top 75%'},x:-40,opacity:0,duration:1,stagger:.1,ease:'power3.out'});
   gsap.from('.contact-form > *',{scrollTrigger:{trigger:'#contact',start:'top 75%'},x:40,opacity:0,duration:1,stagger:.08,ease:'power3.out'});
 }
