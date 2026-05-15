@@ -4,189 +4,141 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lovanjoy – Photographe de Mariage</title>
 <style>
-:root{--gold:#b8963e;--gold-light:#d4af6a;--dark:#0d0b09;--white:#f4f1ec;--gray:#6b6560;--section-gap:120px}
+:root{--gold:#b8963e;--gold-light:#d4af6a;--dark:#0d0b09;--white:#f4f1ec;--gray:#6b6560}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:auto}
 body{background:var(--dark);color:var(--white);font-family:'Georgia',serif;overflow-x:hidden;cursor:none}
-
-/* Custom cursor */
-#cursor-dot{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(184,150,62,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s,width .3s,height .3s,opacity .3s}
-body.cursor-over #cursor-ring{width:52px;height:52px;border-color:var(--gold)}
-
-/* Preloader */
+#cursor-dot{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(184,150,62,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+body.cur #cursor-ring{width:52px;height:52px;border-color:var(--gold)}
 #preloader{position:fixed;inset:0;background:var(--dark);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
-#preloader-brand{font-family:'Georgia',serif;font-size:2rem;letter-spacing:.3em;color:var(--gold);opacity:0;animation:fadeIn 1s .3s forwards}
-#preloader-bar-wrap{width:200px;height:1px;background:rgba(255,255,255,.1)}
-#preloader-bar{height:1px;width:0;background:var(--gold);transition:width .05s linear}
-#preloader-pct{font-size:.75rem;letter-spacing:.2em;color:var(--gray);opacity:0;animation:fadeIn .8s .5s forwards}
-@keyframes fadeIn{to{opacity:1}}
-
-/* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;transition:background .5s,border-color .5s,padding .5s;border-bottom:1px solid transparent}
-.nav-brand{font-family:'Georgia',serif;font-size:1.25rem;letter-spacing:.25em;text-decoration:none;color:var(--white);font-weight:400;transition:color .4s}
+#pl-brand{font-size:2rem;letter-spacing:.3em;color:var(--gold);opacity:0;animation:fi 1s .3s forwards}
+#pl-wrap{width:200px;height:1px;background:rgba(255,255,255,.1)}
+#pl-bar{height:1px;width:0;background:var(--gold);transition:width .05s linear}
+#pl-pct{font-size:.75rem;letter-spacing:.2em;color:var(--gray);opacity:0;animation:fi .8s .5s forwards}
+@keyframes fi{to{opacity:1}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;transition:background .5s,padding .5s;border-bottom:1px solid transparent}
+.nav-brand{font-size:1.25rem;letter-spacing:.25em;text-decoration:none;color:var(--white);transition:color .4s}
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{color:rgba(255,255,255,.75);text-decoration:none;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:color .3s}
 .nav-links a:hover{color:var(--gold)}
-nav.scrolled{background:rgba(244,241,236,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.07);padding:16px 48px}
-nav.scrolled .nav-brand{color:var(--dark)}
-nav.scrolled .nav-links a{color:rgba(13,11,9,.65)}
-nav.scrolled .nav-links a:hover{color:var(--gold)}
-
-/* Hero */
+nav.sc{background:rgba(244,241,236,.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.07);padding:16px 48px}
+nav.sc .nav-brand{color:var(--dark)}
+nav.sc .nav-links a{color:rgba(13,11,9,.65)}
+nav.sc .nav-links a:hover{color:var(--gold)}
 #hero{height:100vh;position:relative;overflow:hidden;background:var(--dark)}
-#hero-canvas-wrap{position:absolute;inset:0;z-index:1}
-#hero-canvas-wrap canvas{width:100%!important;height:100%!important;display:block}
-.hero-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 90% 90% at 50% 50%,rgba(13,11,9,.05) 0%,rgba(13,11,9,.65) 100%)}
-.hero-center{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center;padding:0 20px}
-.hero-eyebrow{font-size:.75rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px;opacity:0;animation:fadeIn 1s 1s forwards}
-.hero-main-title{font-family:'Georgia',serif;font-size:clamp(3.5rem,9vw,8rem);font-weight:400;letter-spacing:.2em;color:var(--white);line-height:1;margin-bottom:24px;opacity:0;animation:fadeIn 1.2s 1.2s forwards}
-.hero-gold-line{width:60px;height:1px;background:var(--gold);margin:0 auto 24px;opacity:0;animation:fadeIn 1s 1.5s forwards}
-.hero-italic-sub{font-style:italic;font-size:clamp(1rem,2vw,1.4rem);color:rgba(255,255,255,.7);letter-spacing:.08em;opacity:0;animation:fadeIn 1s 1.7s forwards}
-.hero-bottom{position:absolute;bottom:32px;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;padding:0 48px;opacity:0;animation:fadeIn 1s 2s forwards}
-.hero-caption{font-size:.75rem;letter-spacing:.15em;color:rgba(255,255,255,.6);text-transform:uppercase}
-.hero-caption strong{display:block;color:var(--white);margin-bottom:4px}
-.hero-scroll-hint{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:.7rem;letter-spacing:.2em;color:rgba(255,255,255,.5);text-transform:uppercase}
-.scroll-track{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite}
-@keyframes scrollPulse{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.6);opacity:.4}}
-
-/* Sections */
-section{padding:var(--section-gap) 48px}
-
-/* About */
+#hero canvas{position:absolute;inset:0;width:100%!important;height:100%!important;z-index:1;display:block}
+.h-vig{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse 90% 90% at 50% 50%,rgba(13,11,9,.05) 0%,rgba(13,11,9,.65) 100%)}
+.h-ctr{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center;padding:0 20px}
+.h-eye{font-size:.75rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold-light);margin-bottom:20px;opacity:0;animation:fi 1s 1s forwards}
+.h-ttl{font-size:clamp(3.5rem,9vw,8rem);font-weight:400;letter-spacing:.2em;color:var(--white);line-height:1;margin-bottom:24px;opacity:0;animation:fi 1.2s 1.2s forwards}
+.h-ln{width:60px;height:1px;background:var(--gold);margin:0 auto 24px;opacity:0;animation:fi 1s 1.5s forwards}
+.h-sub{font-style:italic;font-size:clamp(1rem,2vw,1.4rem);color:rgba(255,255,255,.7);letter-spacing:.08em;opacity:0;animation:fi 1s 1.7s forwards}
+.h-bot{position:absolute;bottom:32px;left:0;right:0;z-index:3;display:flex;justify-content:space-between;align-items:flex-end;padding:0 48px;opacity:0;animation:fi 1s 2s forwards}
+.h-cap{font-size:.75rem;letter-spacing:.15em;color:rgba(255,255,255,.6);text-transform:uppercase}
+.h-cap strong{display:block;color:var(--white);margin-bottom:4px}
+.h-scr{display:flex;flex-direction:column;align-items:center;gap:10px;font-size:.7rem;letter-spacing:.2em;color:rgba(255,255,255,.5);text-transform:uppercase}
+.scr-tr{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:sp 2s ease-in-out infinite}
+@keyframes sp{0%,100%{transform:scaleY(1);opacity:1}50%{transform:scaleY(.6);opacity:.4}}
+section{padding:120px 48px}
+.overline{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:block}
+.sec-hdr{margin-bottom:64px;text-align:center}
+.sec-hdr h2{font-size:clamp(2rem,4vw,3rem);font-weight:400}
 #about{background:var(--white);color:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.about-img-wrap{position:relative;overflow:hidden}
-.about-img-wrap img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
-.about-img-accent{position:absolute;bottom:-20px;right:-20px;width:60%;aspect-ratio:4/5;border:2px solid var(--gold);z-index:-1}
-.about-text .overline{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
-.about-text h2{font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.2;margin-bottom:28px}
-.about-text p{color:var(--gray);line-height:1.9;margin-bottom:20px;font-size:.95rem}
-.about-signature{font-family:'Georgia',serif;font-style:italic;font-size:1.5rem;color:var(--dark);margin-top:32px}
-
-/* Gallery */
+.ab-img{position:relative;overflow:hidden}
+.ab-img img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.ab-acc{position:absolute;bottom:-20px;right:-20px;width:60%;aspect-ratio:4/5;border:2px solid var(--gold);z-index:-1}
+.ab-txt h2{font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.2;margin-bottom:28px}
+.ab-txt p{color:var(--gray);line-height:1.9;margin-bottom:20px;font-size:.95rem}
+.ab-sig{font-style:italic;font-size:1.5rem;color:var(--dark);margin-top:32px}
 #gallery{background:var(--dark);text-align:center}
-.section-header{margin-bottom:64px}
-.section-header .overline{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-.section-header h2{font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--white)}
-
-/* Scroll strip gallery */
-.gallery-strip-wrap{overflow:hidden;margin-bottom:4px}
-.gallery-strip{display:flex;gap:4px;animation:stripScroll 40s linear infinite}
-.gallery-strip:hover{animation-play-state:paused}
-.gallery-strip-inner{display:flex;gap:4px;flex-shrink:0}
-.strip-img{height:280px;width:auto;object-fit:cover;display:block;flex-shrink:0;transition:transform .6s ease}
-.gallery-strip:hover .strip-img{transform:scale(1.03)}
-@keyframes stripScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* Static grid */
-.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
-.gallery-item{overflow:hidden;position:relative;cursor:none}
-.gallery-item img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .8s ease}
-.gallery-item:hover img{transform:scale(1.05)}
-.gallery-item.tall img{aspect-ratio:2/3}
-.gallery-item.wide{grid-column:span 2}
-.gallery-item.wide img{aspect-ratio:16/9}
-.gallery-overlay{position:absolute;inset:0;background:rgba(13,11,9,0);transition:background .4s;display:flex;align-items:center;justify-content:center}
-.gallery-item:hover .gallery-overlay{background:rgba(13,11,9,.35)}
-.gallery-overlay span{color:var(--white);font-style:italic;font-size:.9rem;letter-spacing:.1em;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
-.gallery-item:hover .gallery-overlay span{opacity:1;transform:translateY(0)}
-
-/* Services */
+.sec-hdr h2{color:var(--white)}
+.str-wrap{overflow:hidden;margin-bottom:4px}
+.strip{display:flex;gap:4px;animation:sc 40s linear infinite}
+.strip:hover{animation-play-state:paused}
+.s-inn{display:flex;gap:4px;flex-shrink:0}
+.s-img{height:280px;width:auto;object-fit:cover;display:block;flex-shrink:0}
+@keyframes sc{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.g-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:4px}
+.g-it{overflow:hidden;position:relative;cursor:none}
+.g-it img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .8s}
+.g-it:hover img{transform:scale(1.05)}
+.g-it.w{grid-column:span 2}
+.g-it.w img{aspect-ratio:16/9}
+.g-ov{position:absolute;inset:0;background:rgba(13,11,9,0);transition:background .4s;display:flex;align-items:center;justify-content:center}
+.g-it:hover .g-ov{background:rgba(13,11,9,.35)}
+.g-ov span{color:var(--white);font-style:italic;font-size:.9rem;letter-spacing:.1em;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.g-it:hover .g-ov span{opacity:1;transform:translateY(0)}
 #services{background:var(--white);color:var(--dark)}
-#services .section-header h2{color:var(--dark)}
-#services .section-header .overline{color:var(--gold)}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:64px}
-.service-card{text-align:center;padding:48px 32px;border:1px solid rgba(0,0,0,.08);transition:border-color .4s,transform .4s}
-.service-card:hover{border-color:var(--gold);transform:translateY(-6px)}
-.service-icon{font-size:2rem;margin-bottom:24px;display:block}
-.service-card h3{font-size:1.2rem;font-weight:400;margin-bottom:16px;letter-spacing:.05em}
-.service-card p{color:var(--gray);font-size:.9rem;line-height:1.8;margin-bottom:24px}
-.service-price{font-size:1.4rem;color:var(--gold);font-style:italic}
-
-/* Process */
+#services .sec-hdr h2{color:var(--dark)}
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:64px}
+.sv-card{text-align:center;padding:48px 32px;border:1px solid rgba(0,0,0,.08);transition:border-color .4s,transform .4s}
+.sv-card:hover{border-color:var(--gold);transform:translateY(-6px)}
+.sv-icon{font-size:2rem;margin-bottom:24px;display:block}
+.sv-card h3{font-size:1.2rem;font-weight:400;margin-bottom:16px}
+.sv-card p{color:var(--gray);font-size:.9rem;line-height:1.8;margin-bottom:24px}
+.sv-price{font-size:1.4rem;color:var(--gold);font-style:italic}
 #process{background:var(--dark);text-align:center}
-.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:64px}
-.process-step{position:relative}
-.step-number{font-size:4rem;font-family:'Georgia',serif;color:rgba(184,150,62,.15);font-weight:400;line-height:1;margin-bottom:16px}
-.step-title{font-size:.95rem;letter-spacing:.1em;margin-bottom:12px;color:var(--white)}
-.step-desc{font-size:.85rem;color:var(--gray);line-height:1.7}
-.process-step::after{content:'';position:absolute;top:2rem;right:-16px;width:32px;height:1px;background:rgba(184,150,62,.3)}
-.process-step:last-child::after{display:none}
-
-/* Stats */
+.pr-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:64px}
+.pr-step{position:relative}
+.pr-n{font-size:4rem;color:rgba(184,150,62,.15);font-weight:400;line-height:1;margin-bottom:16px}
+.pr-t{font-size:.95rem;letter-spacing:.1em;margin-bottom:12px;color:var(--white)}
+.pr-d{font-size:.85rem;color:var(--gray);line-height:1.7}
+.pr-step::after{content:'';position:absolute;top:2rem;right:-16px;width:32px;height:1px;background:rgba(184,150,62,.3)}
+.pr-step:last-child::after{display:none}
 #stats{background:var(--gold);color:var(--dark);text-align:center;padding:80px 48px}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
-.stat-number{font-size:clamp(2.5rem,5vw,4rem);font-family:'Georgia',serif;font-weight:400;line-height:1}
-.stat-label{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;margin-top:8px;opacity:.7}
-
-/* Testimonials */
+.st-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.st-n{font-size:clamp(2.5rem,5vw,4rem);font-weight:400;line-height:1}
+.st-l{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;margin-top:8px;opacity:.7}
 #testimonials{background:var(--dark);text-align:center}
-.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
-.testimonial-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:40px 32px;text-align:left}
-.testimonial-stars{color:var(--gold);font-size:.85rem;margin-bottom:20px;letter-spacing:4px}
-.testimonial-text{font-style:italic;color:rgba(255,255,255,.8);line-height:1.8;font-size:.9rem;margin-bottom:24px}
-.testimonial-author{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light)}
-.testimonial-date{font-size:.72rem;color:var(--gray);margin-top:4px}
-
-/* Contact */
+.te-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
+.te-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:40px 32px;text-align:left}
+.te-stars{color:var(--gold);font-size:.85rem;margin-bottom:20px;letter-spacing:4px}
+.te-txt{font-style:italic;color:rgba(255,255,255,.8);line-height:1.8;font-size:.9rem;margin-bottom:24px}
+.te-auth{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light)}
+.te-date{font-size:.72rem;color:var(--gray);margin-top:4px}
 #contact{background:var(--white);color:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.contact-info .overline{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
-.contact-info h2{font-size:clamp(2rem,4vw,3rem);font-weight:400;margin-bottom:28px}
-.contact-info p{color:var(--gray);line-height:1.9;font-size:.95rem;margin-bottom:32px}
-.contact-detail{display:flex;gap:16px;align-items:center;margin-bottom:20px;font-size:.9rem}
-.contact-detail span:first-child{color:var(--gold);font-size:1.1rem;width:24px}
-.contact-form{display:flex;flex-direction:column;gap:20px}
-.form-group{display:flex;flex-direction:column;gap:8px}
-.form-group label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
-.form-group input,.form-group select,.form-group textarea{background:transparent;border:none;border-bottom:1px solid rgba(0,0,0,.15);padding:12px 0;font-family:'Georgia',serif;font-size:.95rem;color:var(--dark);outline:none;transition:border-color .3s}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-bottom-color:var(--gold)}
-.form-group textarea{resize:vertical;min-height:120px}
-.btn-submit{background:var(--dark);color:var(--white);border:none;padding:16px 40px;font-family:'Georgia',serif;font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:background .3s,transform .3s;align-self:flex-start;margin-top:8px}
-.btn-submit:hover{background:var(--gold);transform:translateX(4px)}
-
-/* Footer */
+.co-inf h2{font-size:clamp(2rem,4vw,3rem);font-weight:400;margin-bottom:28px}
+.co-inf p{color:var(--gray);line-height:1.9;font-size:.95rem;margin-bottom:32px}
+.co-det{display:flex;gap:16px;align-items:center;margin-bottom:20px;font-size:.9rem}
+.co-det .ic{color:var(--gold);font-size:1.1rem;width:24px}
+.co-form{display:flex;flex-direction:column;gap:20px}
+.fg{display:flex;flex-direction:column;gap:8px}
+.fg label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
+.fg input,.fg select,.fg textarea{background:transparent;border:none;border-bottom:1px solid rgba(0,0,0,.15);padding:12px 0;font-family:'Georgia',serif;font-size:.95rem;color:var(--dark);outline:none;transition:border-color .3s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-bottom-color:var(--gold)}
+.fg textarea{resize:vertical;min-height:120px}
+.btn-s{background:var(--dark);color:var(--white);border:none;padding:16px 40px;font-family:'Georgia',serif;font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:background .3s,transform .3s;align-self:flex-start;margin-top:8px}
+.btn-s:hover{background:var(--gold);transform:translateX(4px)}
 footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding:64px 48px 32px;text-align:center}
-.footer-brand{font-family:'Georgia',serif;font-size:1.5rem;letter-spacing:.3em;color:var(--gold);margin-bottom:8px}
-.footer-tagline{font-style:italic;color:var(--gray);font-size:.85rem;margin-bottom:40px}
-.footer-links{display:flex;justify-content:center;gap:32px;margin-bottom:40px;list-style:none}
-.footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;transition:color .3s}
-.footer-links a:hover{color:var(--gold)}
-.footer-social{display:flex;justify-content:center;gap:24px;margin-bottom:40px}
-.footer-social a{width:40px;height:40px;border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;transition:border-color .3s,color .3s}
-.footer-social a:hover{border-color:var(--gold);color:var(--gold)}
-.footer-copy{font-size:.72rem;color:var(--gray);letter-spacing:.1em}
-
-/* Responsive */
+.ft-brand{font-size:1.5rem;letter-spacing:.3em;color:var(--gold);margin-bottom:8px}
+.ft-tag{font-style:italic;color:var(--gray);font-size:.85rem;margin-bottom:40px}
+.ft-lnk{display:flex;justify-content:center;gap:32px;margin-bottom:40px;list-style:none}
+.ft-lnk a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;transition:color .3s}
+.ft-lnk a:hover{color:var(--gold)}
+.ft-soc{display:flex;justify-content:center;gap:24px;margin-bottom:40px}
+.ft-soc a{width:40px;height:40px;border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);text-decoration:none;font-size:.8rem;transition:border-color .3s,color .3s}
+.ft-soc a:hover{border-color:var(--gold);color:var(--gold)}
+.ft-copy{font-size:.72rem;color:var(--gray);letter-spacing:.1em}
 @media(max-width:900px){
-  nav{padding:20px 24px}
-  nav.scrolled{padding:14px 24px}
-  .nav-links{display:none}
+  nav{padding:20px 24px}nav.sc{padding:14px 24px}.nav-links{display:none}
   section{padding:80px 24px}
   #about,#contact{grid-template-columns:1fr;gap:48px}
-  .gallery-grid{grid-template-columns:1fr 1fr}
-  .gallery-item.wide{grid-column:span 1}
-  .gallery-item.wide img{aspect-ratio:3/4}
-  .services-grid,.process-steps,.stats-grid,.testimonials-grid{grid-template-columns:1fr}
-  .process-step::after{display:none}
-  .hero-bottom{padding:0 24px}
-  .strip-img{height:200px}
+  .g-grid{grid-template-columns:1fr 1fr}.g-it.w{grid-column:span 1}.g-it.w img{aspect-ratio:3/4}
+  .sv-grid,.pr-grid,.st-grid,.te-grid{grid-template-columns:1fr}
+  .pr-step::after{display:none}.h-bot{padding:0 24px}.s-img{height:180px}
 }
 </style>
 </head>
 <body>
 
-<!-- Preloader -->
 <div id="preloader">
-  <div id="preloader-brand">LOVANJOY</div>
-  <div id="preloader-bar-wrap"><div id="preloader-bar"></div></div>
-  <div id="preloader-pct">0%</div>
+  <div id="pl-brand">LOVANJOY</div>
+  <div id="pl-wrap"><div id="pl-bar"></div></div>
+  <div id="pl-pct">0%</div>
 </div>
-
-<!-- Cursor -->
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
 
-<!-- Nav -->
 <nav id="nav">
   <a href="#" class="nav-brand">LOVANJOY</a>
   <ul class="nav-links">
@@ -198,568 +150,305 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding
   </ul>
 </nav>
 
-<!-- Hero -->
 <section id="hero">
-  <div id="hero-canvas-wrap"></div>
-  <div class="hero-vignette"></div>
-  <div class="hero-center">
-    <span class="hero-eyebrow">Photographe de Mariage</span>
-    <h1 class="hero-main-title">LOVANJOY</h1>
-    <div class="hero-gold-line"></div>
-    <p class="hero-italic-sub">Chaque instant, éternel</p>
+  <div class="h-vig"></div>
+  <div class="h-ctr">
+    <span class="h-eye">Photographe de Mariage</span>
+    <h1 class="h-ttl">LOVANJOY</h1>
+    <div class="h-ln"></div>
+    <p class="h-sub">Chaque instant, éternel</p>
   </div>
-  <div class="hero-bottom" id="heroBottom">
-    <div class="hero-caption"><strong>Sophie Moreau</strong>France &amp; International</div>
-    <div class="hero-scroll-hint"><div class="scroll-track"></div>Défiler</div>
+  <div class="h-bot">
+    <div class="h-cap"><strong>Sophie Moreau</strong>France &amp; International</div>
+    <div class="h-scr"><div class="scr-tr"></div>Défiler</div>
   </div>
 </section>
 
-<!-- About -->
 <section id="about">
-  <div class="about-img-wrap">
-    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Sophie Moreau photographe">
-    <div class="about-img-accent"></div>
+  <div class="ab-img">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="">
+    <div class="ab-acc"></div>
   </div>
-  <div class="about-text">
-    <p class="overline">L'histoire derrière l'objectif</p>
+  <div class="ab-txt">
+    <span class="overline">L'histoire derrière l'objectif</span>
     <h2>Capturer l'amour dans toute sa vérité</h2>
     <p>Je suis Sophie Moreau, photographe de mariage basée en France. Depuis dix ans, j'ai le privilège d'immortaliser les moments les plus précieux de votre vie — la larme qui tremble, le sourire qui éclate, le regard qui dit tout.</p>
     <p>Mon approche est à la fois discrète et présente : je me fonds dans l'instant pour en saisir l'authenticité. Chaque reportage est une œuvre unique, portée par votre histoire.</p>
     <p>De la Provence aux châteaux de la Loire, de Paris aux îles grecques, je vous accompagne partout où l'amour vous mène.</p>
-    <div class="about-signature">Sophie Moreau</div>
+    <div class="ab-sig">Sophie Moreau</div>
   </div>
 </section>
 
-<!-- Gallery -->
 <section id="gallery">
-  <div class="section-header">
-    <p class="overline">Portfolio</p>
-    <h2>Instants d'éternité</h2>
-  </div>
-
-  <!-- Bande défilante automatique -->
-  <div class="gallery-strip-wrap">
-    <div class="gallery-strip">
-      <!-- première moitié -->
-      <div class="gallery-strip-inner">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=600&q=80" alt="">
+  <div class="sec-hdr"><span class="overline">Portfolio</span><h2>Instants d'éternité</h2></div>
+  <div class="str-wrap">
+    <div class="strip">
+      <div class="s-inn">
+        <img class="s-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=600&q=80" alt="">
       </div>
-      <!-- deuxième moitié (copie pour boucle infinie) -->
-      <div class="gallery-strip-inner" aria-hidden="true">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=600&q=80" alt="">
-        <img class="strip-img" src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=600&q=80" alt="">
+      <div class="s-inn" aria-hidden="true">
+        <img class="s-img" src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=600&q=80" alt="">
+        <img class="s-img" src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=600&q=80" alt="">
       </div>
     </div>
   </div>
-
-  <!-- Grille statique -->
-  <div class="gallery-grid">
-    <div class="gallery-item wide">
-      <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=80" alt="Cérémonie">
-      <div class="gallery-overlay"><span>La cérémonie</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80" alt="Portrait mariée">
-      <div class="gallery-overlay"><span>Portrait</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80" alt="Détails">
-      <div class="gallery-overlay"><span>Les détails</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=80" alt="Couple">
-      <div class="gallery-overlay"><span>Le couple</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=800&q=80" alt="Préparatifs">
-      <div class="gallery-overlay"><span>Préparatifs</span></div>
-    </div>
-    <div class="gallery-item wide">
-      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=80" alt="Réception">
-      <div class="gallery-overlay"><span>La réception</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=800&q=80" alt="Église">
-      <div class="gallery-overlay"><span>Cérémonie religieuse</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=800&q=80" alt="Émotion">
-      <div class="gallery-overlay"><span>L'émotion</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=800&q=80" alt="Alliances">
-      <div class="gallery-overlay"><span>Les alliances</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=800&q=80" alt="Fleurs">
-      <div class="gallery-overlay"><span>Florales</span></div>
-    </div>
-    <div class="gallery-item wide">
-      <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200&q=80" alt="Lumière dorée">
-      <div class="gallery-overlay"><span>Lumière dorée</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Robe de mariée">
-      <div class="gallery-overlay"><span>La robe</span></div>
-    </div>
+  <div class="g-grid">
+    <div class="g-it w"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=80" alt=""><div class="g-ov"><span>La cérémonie</span></div></div>
+    <div class="g-it"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80" alt=""><div class="g-ov"><span>Portrait</span></div></div>
+    <div class="g-it"><img src="https://images.unsplash.com/photo-1525772764200-be829a350797?w=800&q=80" alt=""><div class="g-ov"><span>Les alliances</span></div></div>
+    <div class="g-it"><img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=800&q=80" alt=""><div class="g-ov"><span>Le couple</span></div></div>
+    <div class="g-it w"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=80" alt=""><div class="g-ov"><span>La réception</span></div></div>
+    <div class="g-it"><img src="https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=800&q=80" alt=""><div class="g-ov"><span>Cérémonie</span></div></div>
+    <div class="g-it"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt=""><div class="g-ov"><span>La robe</span></div></div>
+    <div class="g-it w"><img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200&q=80" alt=""><div class="g-ov"><span>Lumière dorée</span></div></div>
   </div>
 </section>
 
-<!-- Services -->
 <section id="services">
-  <div class="section-header">
-    <p class="overline">Nos formules</p>
-    <h2>Une offre pensée pour vous</h2>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <span class="service-icon">◇</span>
-      <h3>Essentiel</h3>
-      <p>Couverture de la cérémonie et des portraits de couple. Livraison de 200 photos retouchées sous 4 semaines.</p>
-      <div class="service-price">à partir de 1 800€</div>
-    </div>
-    <div class="service-card">
-      <span class="service-icon">◈</span>
-      <h3>Prestige</h3>
-      <p>Journée complète, préparatifs au dîner. 400 photos + album 30×30 cm. Couverture vidéo en option.</p>
-      <div class="service-price">à partir de 3 200€</div>
-    </div>
-    <div class="service-card">
-      <span class="service-icon">◉</span>
-      <h3>Signature</h3>
-      <p>Sur-mesure total : deux jours, engagement shoot, album luxe cuir, tirages fine-art. Pour les mariages d'exception.</p>
-      <div class="service-price">sur devis</div>
-    </div>
+  <div class="sec-hdr"><span class="overline">Nos formules</span><h2>Une offre pensée pour vous</h2></div>
+  <div class="sv-grid">
+    <div class="sv-card"><span class="sv-icon">◇</span><h3>Essentiel</h3><p>Couverture de la cérémonie et des portraits de couple. 200 photos retouchées sous 4 semaines.</p><div class="sv-price">à partir de 1 800€</div></div>
+    <div class="sv-card"><span class="sv-icon">◈</span><h3>Prestige</h3><p>Journée complète, préparatifs au dîner. 400 photos + album 30×30 cm. Vidéo en option.</p><div class="sv-price">à partir de 3 200€</div></div>
+    <div class="sv-card"><span class="sv-icon">◉</span><h3>Signature</h3><p>Sur-mesure total : deux jours, engagement shoot, album luxe cuir, tirages fine-art.</p><div class="sv-price">sur devis</div></div>
   </div>
 </section>
 
-<!-- Process -->
 <section id="process">
-  <div class="section-header">
-    <p class="overline">Comment ça marche</p>
-    <h2>De la rencontre au souvenir</h2>
-  </div>
-  <div class="process-steps">
-    <div class="process-step">
-      <div class="step-number">01</div>
-      <div class="step-title">Premier contact</div>
-      <p class="step-desc">On se rencontre (en vrai ou en visio) pour parler de votre projet, de vos envies, de ce qui vous rend uniques.</p>
-    </div>
-    <div class="process-step">
-      <div class="step-number">02</div>
-      <div class="step-title">La préparation</div>
-      <p class="step-desc">Je visite les lieux, prépare le planning photo, répond à toutes vos questions jusqu'au jour J.</p>
-    </div>
-    <div class="process-step">
-      <div class="step-number">03</div>
-      <div class="step-title">Le grand jour</div>
-      <p class="step-desc">Je me fonds dans votre mariage, capture chaque instant avec discrétion et authenticité.</p>
-    </div>
-    <div class="process-step">
-      <div class="step-number">04</div>
-      <div class="step-title">La livraison</div>
-      <p class="step-desc">Galerie privée en ligne, photos retouchées avec soin, album souvenir. Des souvenirs pour toujours.</p>
-    </div>
+  <div class="sec-hdr"><span class="overline">Comment ça marche</span><h2>De la rencontre au souvenir</h2></div>
+  <div class="pr-grid">
+    <div class="pr-step"><div class="pr-n">01</div><div class="pr-t">Premier contact</div><p class="pr-d">On se rencontre pour parler de votre projet et de vos envies.</p></div>
+    <div class="pr-step"><div class="pr-n">02</div><div class="pr-t">La préparation</div><p class="pr-d">Je visite les lieux et prépare le planning photo jusqu'au jour J.</p></div>
+    <div class="pr-step"><div class="pr-n">03</div><div class="pr-t">Le grand jour</div><p class="pr-d">Je capture chaque instant avec discrétion et authenticité.</p></div>
+    <div class="pr-step"><div class="pr-n">04</div><div class="pr-t">La livraison</div><p class="pr-d">Galerie privée en ligne, photos retouchées, album souvenir.</p></div>
   </div>
 </section>
 
-<!-- Stats -->
 <section id="stats">
-  <div class="stats-grid">
-    <div>
-      <div class="stat-number" data-target="340">0</div>
-      <div class="stat-label">Mariages célébrés</div>
-    </div>
-    <div>
-      <div class="stat-number" data-target="12">0</div>
-      <div class="stat-label">Pays couverts</div>
-    </div>
-    <div>
-      <div class="stat-number" data-target="10">0</div>
-      <div class="stat-label">Années d'expérience</div>
-    </div>
-    <div>
-      <div class="stat-number" data-target="98">0</div>
-      <div class="stat-label">% clients satisfaits</div>
-    </div>
+  <div class="st-grid">
+    <div><div class="st-n" data-t="340">0</div><div class="st-l">Mariages célébrés</div></div>
+    <div><div class="st-n" data-t="12">0</div><div class="st-l">Pays couverts</div></div>
+    <div><div class="st-n" data-t="10">0</div><div class="st-l">Années d'expérience</div></div>
+    <div><div class="st-n" data-t="98">0</div><div class="st-l">% clients satisfaits</div></div>
   </div>
 </section>
 
-<!-- Testimonials -->
 <section id="testimonials">
-  <div class="section-header">
-    <p class="overline">Témoignages</p>
-    <h2>Ils nous font confiance</h2>
-  </div>
-  <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">« Sophie a su capturer des émotions que nous n'avions pas vues sur le moment. Chaque photo raconte une histoire. Un travail d'une sensibilité rare. »</p>
-      <div class="testimonial-author">Camille &amp; Thomas</div>
-      <div class="testimonial-date">Château de Versailles, juin 2024</div>
-    </div>
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">« Discrète, professionnelle et tellement talentueuse. Nos photos sont au-delà de tout ce qu'on espérait. On les regarde encore chaque semaine. »</p>
-      <div class="testimonial-author">Léa &amp; Maxime</div>
-      <div class="testimonial-date">Côte d'Azur, septembre 2024</div>
-    </div>
-    <div class="testimonial-card">
-      <div class="testimonial-stars">★★★★★</div>
-      <p class="testimonial-text">« Un véritable art de vivre dans chaque image. Sophie comprend l'intimité d'un mariage et la transforme en quelque chose d'intemporel. »</p>
-      <div class="testimonial-author">Marie &amp; Antoine</div>
-      <div class="testimonial-date">Toscane, Italie, mai 2024</div>
-    </div>
+  <div class="sec-hdr"><span class="overline">Témoignages</span><h2>Ils nous font confiance</h2></div>
+  <div class="te-grid">
+    <div class="te-card"><div class="te-stars">★★★★★</div><p class="te-txt">« Sophie a su capturer des émotions que nous n'avions pas vues sur le moment. Chaque photo raconte une histoire. »</p><div class="te-auth">Camille &amp; Thomas</div><div class="te-date">Château de Versailles, juin 2024</div></div>
+    <div class="te-card"><div class="te-stars">★★★★★</div><p class="te-txt">« Discrète, professionnelle et talentueuse. Nos photos sont au-delà de tout ce qu'on espérait. »</p><div class="te-auth">Léa &amp; Maxime</div><div class="te-date">Côte d'Azur, septembre 2024</div></div>
+    <div class="te-card"><div class="te-stars">★★★★★</div><p class="te-txt">« Un véritable art de vivre dans chaque image. Sophie transforme chaque instant en quelque chose d'intemporel. »</p><div class="te-auth">Marie &amp; Antoine</div><div class="te-date">Toscane, Italie, mai 2024</div></div>
   </div>
 </section>
 
-<!-- Contact -->
 <section id="contact">
-  <div class="contact-info">
-    <p class="overline">Réservez votre date</p>
+  <div class="co-inf">
+    <span class="overline">Réservez votre date</span>
     <h2>Écrivez-nous</h2>
-    <p>Chaque mariage est unique. Parlez-moi de votre projet et je vous proposerai une formule adaptée à votre vision et votre budget.</p>
-    <div class="contact-detail"><span>✉</span><span>bonjour@lovanjoy.fr</span></div>
-    <div class="contact-detail"><span>☎</span><span>+33 6 12 34 56 78</span></div>
-    <div class="contact-detail"><span>◎</span><span>Paris, France &amp; International</span></div>
+    <p>Chaque mariage est unique. Parlez-moi de votre projet et je vous proposerai une formule adaptée.</p>
+    <div class="co-det"><span class="ic">✉</span><span>bonjour@lovanjoy.fr</span></div>
+    <div class="co-det"><span class="ic">☎</span><span>+33 6 12 34 56 78</span></div>
+    <div class="co-det"><span class="ic">◎</span><span>Paris, France &amp; International</span></div>
   </div>
-  <form class="contact-form" onsubmit="return false">
-    <div class="form-group">
-      <label>Vos prénoms</label>
-      <input type="text" placeholder="Sophie &amp; Thomas">
-    </div>
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" placeholder="vous@exemple.fr">
-    </div>
-    <div class="form-group">
-      <label>Date envisagée</label>
-      <input type="date">
-    </div>
-    <div class="form-group">
-      <label>Lieu du mariage</label>
-      <input type="text" placeholder="Ville, région ou pays">
-    </div>
-    <div class="form-group">
-      <label>Formule souhaitée</label>
-      <select>
-        <option>Essentiel</option>
-        <option>Prestige</option>
-        <option>Signature</option>
-        <option>Je ne sais pas encore</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Votre message</label>
-      <textarea placeholder="Parlez-moi de votre mariage, de votre histoire…"></textarea>
-    </div>
-    <button class="btn-submit">Envoyer la demande</button>
+  <form class="co-form" onsubmit="return false">
+    <div class="fg"><label>Vos prénoms</label><input type="text" placeholder="Sophie &amp; Thomas"></div>
+    <div class="fg"><label>Email</label><input type="email" placeholder="vous@exemple.fr"></div>
+    <div class="fg"><label>Date envisagée</label><input type="date"></div>
+    <div class="fg"><label>Lieu du mariage</label><input type="text" placeholder="Ville, région ou pays"></div>
+    <div class="fg"><label>Formule souhaitée</label><select><option>Essentiel</option><option>Prestige</option><option>Signature</option><option>Je ne sais pas encore</option></select></div>
+    <div class="fg"><label>Votre message</label><textarea placeholder="Parlez-moi de votre mariage…"></textarea></div>
+    <button class="btn-s">Envoyer la demande</button>
   </form>
 </section>
 
-<!-- Footer -->
 <footer>
-  <div class="footer-brand">LOVANJOY</div>
-  <div class="footer-tagline">Chaque instant, éternel</div>
-  <ul class="footer-links">
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#gallery">Galerie</a></li>
-    <li><a href="#services">Formules</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#">Mentions légales</a></li>
+  <div class="ft-brand">LOVANJOY</div>
+  <div class="ft-tag">Chaque instant, éternel</div>
+  <ul class="ft-lnk">
+    <li><a href="#about">À propos</a></li><li><a href="#gallery">Galerie</a></li>
+    <li><a href="#services">Formules</a></li><li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="footer-social">
-    <a href="#" aria-label="Instagram">IG</a>
-    <a href="#" aria-label="Pinterest">PT</a>
-    <a href="#" aria-label="Facebook">FB</a>
+  <div class="ft-soc">
+    <a href="#">IG</a><a href="#">PT</a><a href="#">FB</a>
   </div>
-  <p class="footer-copy">&copy; 2025 Lovanjoy – Tous droits réservés</p>
+  <p class="ft-copy">&copy; 2025 Lovanjoy – Tous droits réservés</p>
 </footer>
 
-<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js"></script>
 <script>
-// ─── CURSOR ───────────────────────────────────────────────────────────────────
+/* ── Cursor ── */
 (function(){
-  const dot=document.getElementById('cursor-dot');
-  const ring=document.getElementById('cursor-ring');
+  const dot=document.getElementById('cursor-dot'),ring=document.getElementById('cursor-ring');
   let mx=0,my=0,rx=0,ry=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
-  (function animRing(){requestAnimationFrame(animRing);rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px'})();
-  document.querySelectorAll('a,button,.gallery-item,.service-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-over'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-over'));
+  (function l(){requestAnimationFrame(l);rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px'})();
+  document.querySelectorAll('a,button,.g-it,.sv-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cur'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cur'));
   });
 })();
 
-// ─── HERO: THREE.JS INFINITE TUNNEL ──────────────────────────────────────────
+/* ── Hero Three.js — tunnel infini défilement continu ── */
 (function(){
   if(typeof THREE==='undefined')return;
-
   const IMGS=[
     'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1200&q=80',
     'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=1200&q=80',
-    'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=1200&q=80',
     'https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=1200&q=80',
     'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=1200&q=80',
     'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80',
-    'https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?w=1200&q=80',
-    'https://images.unsplash.com/photo-1560707854-e29e85d84d67?w=1200&q=80',
-    'https://images.unsplash.com/photo-1543306516-d09e4d8cbb9a?w=1200&q=80',
-    'https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=1200&q=80',
+    'https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200&q=80',
     'https://images.unsplash.com/photo-1525772764200-be829a350797?w=1200&q=80',
-    'https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=1200&q=80'
+    'https://images.unsplash.com/photo-1501426026826-31c667bdf23d?w=1200&q=80'
   ];
-
-  const N=12, DEPTH=60;
-  const wrap=document.getElementById('hero-canvas-wrap');
-  function W(){return wrap.clientWidth||window.innerWidth}
-  function H(){return wrap.clientHeight||window.innerHeight}
-
+  const N=8,D=40,SPD=5;
+  const hero=document.getElementById('hero');
+  const W=()=>hero.clientWidth,H=()=>hero.clientHeight;
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(W(),H());
-  renderer.setClearColor(0x000000,0);
-  wrap.appendChild(renderer.domElement);
+  renderer.setClearColor(0,0);
+  hero.insertBefore(renderer.domElement,hero.firstChild);
 
   const scene=new THREE.Scene();
-  const cam=new THREE.PerspectiveCamera(55,W()/H(),0.1,200);
-  cam.position.set(0,0,0);
+  const cam=new THREE.PerspectiveCamera(60,W()/H(),.1,200);
+  cam.position.z=0;
 
-  const vShader=`
-    uniform float scrollForce;
-    uniform float time;
-    uniform float isHovered;
-    varying vec2 vUv;
-    void main(){
-      vUv=uv;
-      vec3 pos=position;
-      float ci=scrollForce*0.3;
-      float dist=length(pos.xy);
-      float curve=dist*dist*ci;
-      float r1=sin(pos.x*2.0+scrollForce*3.0)*0.02;
-      float r2=sin(pos.y*2.5+scrollForce*2.0)*0.015;
-      float cloth=(r1+r2)*abs(ci)*2.0;
-      float flag=0.0;
-      if(isHovered>0.5){
-        float damp=smoothstep(-0.5,0.5,pos.x);
-        flag=sin(pos.x*3.0+time*8.0)*0.1*damp+sin(pos.x*5.0+time*12.0)*0.03*damp;
-      }
-      pos.z-=(curve+cloth+flag);
-      gl_Position=projectionMatrix*modelViewMatrix*vec4(pos,1.0);
-    }
-  `;
+  const VS=`uniform float uT,uSpd,uHov;varying vec2 vUv;
+  void main(){vUv=uv;vec3 p=position;
+  float b=uSpd*.25;
+  p.z+=sin(p.x*1.5+uT*2.)* b*.04+sin(p.y*2.+uT*1.5)*b*.03;
+  if(uHov>.5){float d=smoothstep(-.5,.5,p.x);
+  p.z+=sin(p.x*3.+uT*8.)*.08*d+sin(p.x*6.+uT*13.)*.025*d;}
+  gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}`;
 
-  const fShader=`
-    uniform sampler2D map;
-    uniform float opacity;
-    uniform float blurAmount;
-    uniform float scrollForce;
-    uniform vec2 texelSize;
-    varying vec2 vUv;
-    void main(){
-      vec4 color=texture2D(map,vUv);
-      if(blurAmount>0.001){
-        vec4 blurred=vec4(0.0);
-        float total=0.0;
-        for(float x=-2.0;x<=2.0;x+=1.0){
-          for(float y=-2.0;y<=2.0;y+=1.0){
-            vec2 off=vec2(x,y)*texelSize*blurAmount;
-            float w=1.0/(1.0+length(vec2(x,y)));
-            blurred+=texture2D(map,vUv+off)*w;
-            total+=w;
-          }
-        }
-        color=blurred/total;
-      }
-      color.rgb+=vec3(abs(scrollForce)*0.004);
-      gl_FragColor=vec4(color.rgb,color.a*opacity);
-    }
-  `;
+  const FS=`uniform sampler2D uTex;uniform float uOp,uBlur;uniform vec2 uTxl;varying vec2 vUv;
+  void main(){vec4 c=texture2D(uTex,vUv);
+  if(uBlur>.005){vec4 b=vec4(0.);float tot=0.;
+  for(float x=-2.;x<=2.;x+=1.)for(float y=-2.;y<=2.;y+=1.){
+  float w=1./(1.+length(vec2(x,y)));
+  b+=texture2D(uTex,vUv+vec2(x,y)*uTxl*uBlur*8.)*w;tot+=w;}c=b/tot;}
+  gl_FragColor=vec4(c.rgb,c.a*uOp);}`;
 
-  const geo=new THREE.PlaneGeometry(8,5.5,24,16);
+  const geo=new THREE.PlaneGeometry(7,4.8,20,14);
   const loader=new THREE.TextureLoader();
-  const meshes=[], baseZ=[];
+  const meshes=[];
 
-  for(let i=0;i<N;i++){
-    const mat=new THREE.ShaderMaterial({
-      uniforms:{
-        map:{value:null},
-        opacity:{value:0},
-        blurAmount:{value:8},
-        scrollForce:{value:0},
-        isHovered:{value:0},
-        time:{value:0},
-        texelSize:{value:new THREE.Vector2(1/1200,1/800)}
-      },
-      vertexShader:vShader,
-      fragmentShader:fShader,
-      transparent:true,
-      side:THREE.FrontSide
+  IMGS.forEach((url,i)=>{
+    const uni={
+      uTex:{value:null},uOp:{value:0},uBlur:{value:1},
+      uT:{value:0},uSpd:{value:0},uHov:{value:0},
+      uTxl:{value:new THREE.Vector2(1/1200,1/800)}
+    };
+    loader.load(url,tex=>{
+      tex.minFilter=THREE.LinearFilter;tex.generateMipmaps=false;
+      uni.uTex.value=tex;
+      if(tex.image)uni.uTxl.value.set(1/tex.image.width,1/tex.image.height);
     });
-    (function(idx,m){
-      loader.load(IMGS[idx],tex=>{
-        tex.minFilter=THREE.LinearFilter;
-        m.uniforms.map.value=tex;
-        if(tex.image) m.uniforms.texelSize.value.set(1/tex.image.width,1/tex.image.height);
-      });
-    })(i,mat);
-
+    const mat=new THREE.ShaderMaterial({uniforms:uni,vertexShader:VS,fragmentShader:FS,transparent:true});
     const mesh=new THREE.Mesh(geo,mat);
-    const angle=i*2.618;
-    const rx=Math.sin(angle)*(i%3)*1.2*8/3;
-    const ry=Math.cos(i*1.618+Math.PI/3)*((i+1)%4)*0.8*8/4;
-    mesh.position.set(rx,ry,-(i/N)*DEPTH);
-    baseZ[i]=mesh.position.z;
-    meshes.push(mesh);
+    const a=i*2.618;
+    mesh.position.set(Math.sin(a)*(i%3)*.9, Math.cos(a*.618)*(i%3)*.5, -(i/N)*D);
     scene.add(mesh);
-  }
+    meshes.push(mesh);
+  });
 
-  const raycaster=new THREE.Raycaster();
-  const mouse=new THREE.Vector2(-999,-999);
+  const ray=new THREE.Raycaster(),mouse=new THREE.Vector2(-9,-9);
   renderer.domElement.addEventListener('mousemove',e=>{
     const r=renderer.domElement.getBoundingClientRect();
     mouse.x=((e.clientX-r.left)/r.width)*2-1;
     mouse.y=-((e.clientY-r.top)/r.height)*2+1;
   });
-  renderer.domElement.addEventListener('mouseleave',()=>mouse.set(-999,-999));
+  renderer.domElement.addEventListener('mouseleave',()=>mouse.set(-9,-9));
 
-  // Vitesse constante — toujours en défilement, la molette accélère seulement
-  const BASE_VEL=0.55;
-  let vel=BASE_VEL, scrollPos=0, lastWheel=0;
+  let spd=SPD,lastW=0;
+  renderer.domElement.addEventListener('wheel',e=>{spd+=e.deltaY*.02;lastW=Date.now();},{passive:true});
 
-  renderer.domElement.addEventListener('wheel',e=>{
-    vel+=e.deltaY*0.015;
-    lastWheel=Date.now();
-  },{passive:true});
+  const clk=new THREE.Clock();
+  (function tick(){
+    requestAnimationFrame(tick);
+    const dt=Math.min(clk.getDelta(),.05),t=clk.getElapsedTime();
+    if(Date.now()-lastW>1500) spd+=(SPD-spd)*Math.min(dt*2,1);
+    spd=Math.max(.5,spd);
 
-  const clock=new THREE.Clock();
+    ray.setFromCamera(mouse,cam);
+    const hits=ray.intersectObjects(meshes);
+    const hov=hits.length?hits[0].object:null;
+    document.body.classList.toggle('cur',!!hov);
 
-  (function animate(){
-    requestAnimationFrame(animate);
-    const dt=clock.getDelta();
-    const t=clock.getElapsedTime();
-
-    // Revenir progressivement à la vitesse de base après 2s sans molette
-    if(Date.now()-lastWheel>2000){
-      vel+=(BASE_VEL-vel)*0.03;
-    }
-    vel=Math.max(0.1, vel*0.985 + BASE_VEL*0.015);
-    scrollPos+=vel*dt;
-
-    raycaster.setFromCamera(mouse,cam);
-    const hits=raycaster.intersectObjects(meshes);
-    const hovered=hits.length>0?hits[0].object:null;
-    document.body.classList.toggle('cursor-over',!!hovered);
-
-    meshes.forEach((mesh,i)=>{
-      const raw=baseZ[i]+scrollPos;
-      const cycle=((-raw%DEPTH)+DEPTH)%DEPTH;
-      const np=cycle/DEPTH;
-      mesh.position.z=raw+Math.ceil(-raw/DEPTH)*DEPTH;
-
-      let op=1, blur=0;
-      if(np<0.06) op=np/0.06;
-      else if(np>0.40&&np<0.44) op=1-(np-0.40)/0.04;
-      else if(np>=0.44) op=0;
-
-      if(np<0.12) blur=(1-np/0.12)*5;
-      else if(np>0.40&&np<0.44) blur=((np-0.40)/0.04)*5;
-      else if(np>=0.44) blur=5;
-      else blur=0;
-
+    meshes.forEach(mesh=>{
+      mesh.position.z+=spd*dt;
+      if(mesh.position.z>2) mesh.position.z-=D;
+      const np=Math.max(0,Math.min(1,1-(-mesh.position.z/D)));
+      let op=1,blur=0;
+      if(np<.15) op=np/.15;
+      else if(np>.80) op=1-(np-.80)/.20;
+      if(np<.15) blur=(1-np/.15)*1.2;
+      else if(np>.80) blur=((np-.80)/.20)*1.2;
       const u=mesh.material.uniforms;
-      u.opacity.value=Math.max(0,Math.min(1,op));
-      u.blurAmount.value=blur;
-      u.scrollForce.value=vel;
-      u.time.value=t;
-      u.isHovered.value=mesh===hovered?1:0;
+      u.uOp.value=Math.max(0,op);u.uBlur.value=blur;
+      u.uT.value=t;u.uSpd.value=spd;u.uHov.value=mesh===hov?1:0;
     });
-
     renderer.render(scene,cam);
   })();
 
   new ResizeObserver(()=>{
-    renderer.setSize(W(),H());
-    cam.aspect=W()/H();
-    cam.updateProjectionMatrix();
-  }).observe(wrap);
+    renderer.setSize(W(),H());cam.aspect=W()/H();cam.updateProjectionMatrix();
+  }).observe(hero);
 })();
 
-// ─── BOOT ─────────────────────────────────────────────────────────────────────
+/* ── Boot GSAP + Lenis ── */
 function boot(){
   gsap.registerPlugin(ScrollTrigger);
-
   const lenis=new Lenis({lerp:.08,smoothWheel:true});
   lenis.on('scroll',ScrollTrigger.update);
   gsap.ticker.add(t=>lenis.raf(t*1000));
   gsap.ticker.lagSmoothing(0);
 
-  ScrollTrigger.create({
-    trigger:'#about',start:'top 85%',
-    onEnter:()=>document.getElementById('nav').classList.add('scrolled'),
-    onLeaveBack:()=>document.getElementById('nav').classList.remove('scrolled')
+  ScrollTrigger.create({trigger:'#about',start:'top 85%',
+    onEnter:()=>document.getElementById('nav').classList.add('sc'),
+    onLeaveBack:()=>document.getElementById('nav').classList.remove('sc')});
+
+  gsap.from('.ab-img',{scrollTrigger:{trigger:'#about',start:'top 75%'},x:-60,opacity:0,duration:1.2,ease:'power3.out'});
+  gsap.from('.ab-txt > *',{scrollTrigger:{trigger:'#about',start:'top 70%'},y:40,opacity:0,duration:1,stagger:.12,ease:'power3.out'});
+  gsap.from('.g-it',{scrollTrigger:{trigger:'#gallery',start:'top 80%'},y:50,opacity:0,duration:.9,stagger:.08,ease:'power3.out'});
+  gsap.from('.sv-card',{scrollTrigger:{trigger:'#services',start:'top 75%'},y:40,opacity:0,duration:.9,stagger:.15,ease:'power3.out'});
+  gsap.from('.pr-step',{scrollTrigger:{trigger:'#process',start:'top 75%'},y:30,opacity:0,duration:.8,stagger:.15,ease:'power3.out'});
+  gsap.from('.te-card',{scrollTrigger:{trigger:'#testimonials',start:'top 75%'},y:40,opacity:0,duration:.9,stagger:.15,ease:'power3.out'});
+  gsap.from('.co-inf > *',{scrollTrigger:{trigger:'#contact',start:'top 75%'},x:-40,opacity:0,duration:1,stagger:.1,ease:'power3.out'});
+  gsap.from('.co-form > *',{scrollTrigger:{trigger:'#contact',start:'top 75%'},x:40,opacity:0,duration:1,stagger:.08,ease:'power3.out'});
+
+  document.querySelectorAll('.st-n').forEach(el=>{
+    const t=+el.dataset.t;
+    ScrollTrigger.create({trigger:'#stats',start:'top 80%',
+      onEnter:()=>gsap.to({v:0},{v:t,duration:2,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(this.targets()[0].v)}})});
   });
-
-  gsap.from('.about-img-wrap',{scrollTrigger:{trigger:'#about',start:'top 75%'},x:-60,opacity:0,duration:1.2,ease:'power3.out'});
-  gsap.from('.about-text > *',{scrollTrigger:{trigger:'#about',start:'top 70%'},y:40,opacity:0,duration:1,stagger:.12,ease:'power3.out'});
-  gsap.from('.gallery-item',{scrollTrigger:{trigger:'#gallery',start:'top 80%'},y:50,opacity:0,duration:.9,stagger:.06,ease:'power3.out'});
-  gsap.from('.service-card',{scrollTrigger:{trigger:'#services',start:'top 75%'},y:40,opacity:0,duration:.9,stagger:.15,ease:'power3.out'});
-  gsap.from('.process-step',{scrollTrigger:{trigger:'#process',start:'top 75%'},y:30,opacity:0,duration:.8,stagger:.15,ease:'power3.out'});
-
-  document.querySelectorAll('.stat-number').forEach(el=>{
-    const target=+el.dataset.target;
-    ScrollTrigger.create({
-      trigger:'#stats',start:'top 80%',
-      onEnter:()=>gsap.to({v:0},{v:target,duration:2,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(this.targets()[0].v)}})
-    });
-  });
-
-  gsap.from('.testimonial-card',{scrollTrigger:{trigger:'#testimonials',start:'top 75%'},y:40,opacity:0,duration:.9,stagger:.15,ease:'power3.out'});
-  gsap.from('.contact-info > *',{scrollTrigger:{trigger:'#contact',start:'top 75%'},x:-40,opacity:0,duration:1,stagger:.1,ease:'power3.out'});
-  gsap.from('.contact-form > *',{scrollTrigger:{trigger:'#contact',start:'top 75%'},x:40,opacity:0,duration:1,stagger:.08,ease:'power3.out'});
 }
 
-// ─── PRELOADER ────────────────────────────────────────────────────────────────
+/* ── Preloader ── */
 (function(){
-  const bar=document.getElementById('preloader-bar');
-  const pct=document.getElementById('preloader-pct');
-  const pre=document.getElementById('preloader');
+  const bar=document.getElementById('pl-bar'),pct=document.getElementById('pl-pct'),pre=document.getElementById('preloader');
   let p=0;
   const iv=setInterval(()=>{
-    p+=Math.random()*18+4;
-    if(p>=100){p=100;clearInterval(iv);}
-    bar.style.width=p+'%';
-    pct.textContent=Math.round(p)+'%';
-    if(p>=100){
-      setTimeout(()=>{
-        gsap.to(pre,{opacity:0,duration:.8,onComplete:()=>{pre.style.display='none';boot();}});
-      },300);
-    }
+    p+=Math.random()*18+4;if(p>=100){p=100;clearInterval(iv);}
+    bar.style.width=p+'%';pct.textContent=Math.round(p)+'%';
+    if(p>=100)setTimeout(()=>gsap.to(pre,{opacity:0,duration:.8,onComplete:()=>{pre.style.display='none';boot();}}),300);
   },80);
 })();
 </script>
